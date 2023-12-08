@@ -126,16 +126,30 @@ FROM games
 INNER JOIN studios ON games.s_id = studios.s_id
 GROUP BY s_name
 
-
 **Exercice 18 :
 Calculez le nombre de jeux par studio et par plateforme
 
-
+SELECT p_name, s_name, count(s_name) as 'total_jeux'
+FROM games
+INNER JOIN studios 
+	ON games.s_id = studios.s_id
+INNER JOIN platforms
+	ON games.s_id = platforms.p_id
+INNER JOIN games_platforms
+	ON platforms.p_id = games_platforms.p_id
+GROUP BY s_name
 
 
 
 **Exercice 19 :
 Affichez les jeux disponibles sur au moins 4 plateformes
+
+
+SELECT g_name AS 'nom des jeux', COUNT(g_name) AS 'nombre de plateformes '
+FROM games
+INNER JOIN games_platforms ON games.g_id = games_platforms.g_id
+GROUP BY games.g_id
+HAVING COUNT(games_platforms.p_id) >= 4;
 
 
 
